@@ -14,6 +14,10 @@ class Snake(
     init {
         CoroutineScope(Dispatchers.Default).launch {
             while (true) {
+                if (bottomLeft.x <= -1f || upperRight.x >= 1 || bottomLeft.y <= -1 || upperRight.y >= 1)  {
+                    break
+                }
+
                 if (GLFW.glfwGetKey(window, GLFW.GLFW_KEY_UP) == GLFW.GLFW_PRESS)
                     direction = Direction.UP
                 if (GLFW.glfwGetKey(window, GLFW.GLFW_KEY_DOWN) == GLFW.GLFW_PRESS)
@@ -43,7 +47,7 @@ class Snake(
                         upperRight.y = upperRight.y - 0.01f
                     }
                 }
-                delay(100)
+                delay(50)
             }
         }
     }
