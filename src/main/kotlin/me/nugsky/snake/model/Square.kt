@@ -6,8 +6,8 @@ import org.lwjgl.opengl.GL20
 import org.lwjgl.opengl.GL30
 
 open class Square(
-    private var bottomLeft: Point,
-    private var upperRight: Point
+    val bottomLeft: Point,
+    val upperRight: Point
 ) {
     open fun draw() {
         val vertices = floatArrayOf(

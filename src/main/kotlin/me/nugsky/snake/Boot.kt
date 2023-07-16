@@ -13,6 +13,9 @@ import org.lwjgl.opengl.GL20
 import org.lwjgl.opengl.GL30
 import org.lwjgl.system.MemoryStack.stackPush
 import org.lwjgl.system.MemoryUtil.NULL
+import java.util.LinkedList
+import java.util.concurrent.ConcurrentLinkedQueue
+import java.util.concurrent.LinkedBlockingQueue
 
 
 class Boot {
@@ -64,7 +67,13 @@ class Boot {
         GL.createCapabilities()
 
         val food = Food(Point(0.1f,0.1f), Point(0.15f,0.15f))
-        val snake = Snake(window, Point(0.1f,0.1f), Point(0.15f,0.15f))
+        val snakeSegments = ConcurrentLinkedQueue<Square>()
+        var bottomLeftX = 0.20f
+        while (bottomLeftX > 0) {
+            snakeSegments.add(Square(Point(bottomLeftX,0.1f), Point(bottomLeftX + 0.05f,0.15f)))
+            bottomLeftX -= 0.05f
+        }
+        val snake = Snake(window, snakeSegments)
 
         while (!GLFW.glfwWindowShouldClose(window)) {
 

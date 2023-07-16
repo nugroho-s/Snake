@@ -5,16 +5,21 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.lwjgl.glfw.GLFW
+import java.util.concurrent.ConcurrentLinkedQueue
 
 class Snake(
     private val window: Long,
-    private var bottomLeft: Point,
-    private var upperRight: Point
-) : Square(bottomLeft, upperRight) {
+    private val segments: ConcurrentLinkedQueue<Square> = ConcurrentLinkedQueue<Square>()
+) {
+    private var direction = Direction.LEFT
+    private val speed = 0.05f
     init {
         CoroutineScope(Dispatchers.Default).launch {
             while (true) {
-                if (bottomLeft.x <= -1f || upperRight.x >= 1 || bottomLeft.y <= -1 || upperRight.y >= 1)  {
+                delay(200)
+                val head = segments.last()
+                if (head.bottomLeft.x <= -1f || head.upperRight.x >= 1 ||
+                    head.bottomLeft.y <= -1 || head.upperRight.y >= 1)  {
                     break
                 }
 
@@ -28,28 +33,43 @@ class Snake(
                     direction = Direction.LEFT
 
 
+                var newHead : Square
                 when (direction) {
                     Direction.LEFT -> {
-                        bottomLeft.x = bottomLeft.x - 0.01f
-                        upperRight.x = upperRight.x - 0.01f
+                        newHead = Square(
+                            Point(head.bottomLeft.x - speed, head.bottomLeft.y),
+                            Point(head.upperRight.x - speed, head.upperRight.y)
+                        )
                     }
                     Direction.RIGHT -> {
-                        bottomLeft.x = bottomLeft.x + 0.01f
-                        upperRight.x = upperRight.x + 0.01f
+                        newHead = Square(
+                            Point(head.bottomLeft.x + speed, head.bottomLeft.y),
+                            Point(head.upperRight.x + speed, head.upperRight.y)
+                        )
                     }
                     Direction.UP -> {
-                        bottomLeft.y = bottomLeft.y + 0.01f
-                        upperRight.y = upperRight.y + 0.01f
+                        newHead = Square(
+                            Point(head.bottomLeft.x, head.bottomLeft.y + speed),
+                            Point(head.upperRight.x, head.upperRight.y + speed)
+                        )
                     }
 
                     else -> {
-                        bottomLeft.y = bottomLeft.y - 0.01f
-                        upperRight.y = upperRight.y - 0.01f
+                        newHead = Square(
+                            Point(head.bottomLeft.x, head.bottomLeft.y - speed),
+                            Point(head.upperRight.x, head.upperRight.y - speed)
+                        )
                     }
                 }
-                delay(50)
+                segments.add(newHead)
+                segments.remove()
             }
         }
     }
-    private var direction = Direction.LEFT
+
+    fun draw() {
+        segments.forEach {
+            it.draw()
+        }
+    }
 }
