@@ -23,16 +23,6 @@ class Snake(
                     break
                 }
 
-                if (GLFW.glfwGetKey(window, GLFW.GLFW_KEY_UP) == GLFW.GLFW_PRESS)
-                    direction = Direction.UP
-                if (GLFW.glfwGetKey(window, GLFW.GLFW_KEY_DOWN) == GLFW.GLFW_PRESS)
-                    direction = Direction.DOWN
-                if (GLFW.glfwGetKey(window, GLFW.GLFW_KEY_RIGHT) == GLFW.GLFW_PRESS)
-                    direction = Direction.RIGHT
-                if (GLFW.glfwGetKey(window, GLFW.GLFW_KEY_LEFT) == GLFW.GLFW_PRESS)
-                    direction = Direction.LEFT
-
-
                 var newHead : Square
                 when (direction) {
                     Direction.LEFT -> {
@@ -71,5 +61,10 @@ class Snake(
         segments.forEach {
             it.draw()
         }
+    }
+
+    fun changeDirection(newDirection: Direction?) {
+        if (newDirection == null) return
+        direction = newDirection
     }
 }

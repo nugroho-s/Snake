@@ -1,21 +1,14 @@
 package me.nugsky.snake
 
-import me.nugsky.snake.model.Food
-import me.nugsky.snake.model.Point
-import me.nugsky.snake.model.Snake
-import me.nugsky.snake.model.Square
+import me.nugsky.snake.model.*
 import org.lwjgl.glfw.Callbacks
 import org.lwjgl.glfw.GLFW
 import org.lwjgl.glfw.GLFWErrorCallback
 import org.lwjgl.opengl.GL
 import org.lwjgl.opengl.GL11
-import org.lwjgl.opengl.GL20
-import org.lwjgl.opengl.GL30
 import org.lwjgl.system.MemoryStack.stackPush
 import org.lwjgl.system.MemoryUtil.NULL
-import java.util.LinkedList
 import java.util.concurrent.ConcurrentLinkedQueue
-import java.util.concurrent.LinkedBlockingQueue
 
 
 class Boot {
@@ -74,6 +67,13 @@ class Boot {
             bottomLeftX -= 0.05f
         }
         val snake = Snake(window, snakeSegments)
+        GLFW.glfwSetKeyCallback(window) { window, key, scancode, action, mod ->
+            run {
+                if (action == GLFW.GLFW_PRESS) {
+                    snake.changeDirection(Direction.getByKeyBind(key))
+                }
+            }
+        }
 
         while (!GLFW.glfwWindowShouldClose(window)) {
 
