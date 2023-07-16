@@ -66,7 +66,7 @@ class Boot {
             snakeSegments.add(Square(Point(bottomLeftX,0.1f), Point(bottomLeftX + 0.05f,0.15f)))
             bottomLeftX -= 0.05f
         }
-        val snake = Snake(window, snakeSegments)
+        val snake = Snake(snakeSegments)
         GLFW.glfwSetKeyCallback(window) { window, key, scancode, action, mod ->
             run {
                 if (action == GLFW.GLFW_PRESS) {

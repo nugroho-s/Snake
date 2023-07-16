@@ -4,11 +4,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.lwjgl.glfw.GLFW
 import java.util.concurrent.ConcurrentLinkedQueue
 
 class Snake(
-    private val window: Long,
     private val segments: ConcurrentLinkedQueue<Square> = ConcurrentLinkedQueue<Square>()
 ) {
     private var direction = Direction.LEFT
@@ -65,6 +63,7 @@ class Snake(
 
     fun changeDirection(newDirection: Direction?) {
         if (newDirection == null) return
+        if (direction.isOppositeOf(newDirection)) return
         direction = newDirection
     }
 }
