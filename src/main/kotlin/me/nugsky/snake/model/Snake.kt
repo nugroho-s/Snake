@@ -55,6 +55,8 @@ class Snake(
         }
     }
 
+    fun getHead(): Square = segments.last()
+
     fun draw() {
         segments.forEach {
             it.draw()

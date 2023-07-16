@@ -49,7 +49,7 @@ class Boot {
             val pHeight = stack.mallocInt(1)
             GLFW.glfwGetWindowSize(window, pWidth, pHeight)
             val vidmode = GLFW.glfwGetVideoMode(GLFW.glfwGetPrimaryMonitor())
-            GLFW.glfwSetWindowPos(window, (vidmode!!.width() - pWidth[0]) / 2, (vidmode!!.height() - pHeight[0]) / 2)
+            GLFW.glfwSetWindowPos(window, (vidmode!!.width() - pWidth[0]) / 2, (vidmode.height() - pHeight[0]) / 2)
             GLFW.glfwMakeContextCurrent(window)
             GLFW.glfwSwapInterval(1)
             GLFW.glfwShowWindow(window)
@@ -59,7 +59,7 @@ class Boot {
     private fun loop() {
         GL.createCapabilities()
 
-        val food = Food(Point(0.1f,0.1f), Point(0.15f,0.15f))
+        var food = Food()
         val snakeSegments = ConcurrentLinkedQueue<Square>()
         var bottomLeftX = 0.20f
         while (bottomLeftX > 0) {
@@ -81,6 +81,10 @@ class Boot {
 
             snake.draw()
             food.draw()
+
+            if (snake.getHead().isOverlapping(food)) {
+                food = Food()
+            }
 
             GLFW.glfwSwapBuffers(window)
             GLFW.glfwPollEvents()
