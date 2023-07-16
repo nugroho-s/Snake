@@ -6,8 +6,6 @@ class Food(
 ) : Square(bottomLeft, upperRight) {
     companion object {
         private var shouldDraw = true
-
-
     }
 
     override fun draw() {

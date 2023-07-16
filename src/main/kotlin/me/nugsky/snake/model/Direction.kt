@@ -14,9 +14,13 @@ enum class Direction (val keyBinding: Int) {
         fun getByKeyBind(keyBinding: Int) : Direction? {
             return when (keyBinding) {
                 GLFW.GLFW_KEY_A -> LEFT
+                GLFW.GLFW_KEY_LEFT -> LEFT
                 GLFW.GLFW_KEY_D -> RIGHT
+                GLFW.GLFW_KEY_RIGHT -> RIGHT
                 GLFW.GLFW_KEY_W -> UP
+                GLFW.GLFW_KEY_UP -> UP
                 GLFW.GLFW_KEY_S -> DOWN
+                GLFW.GLFW_KEY_DOWN -> DOWN
                 else -> null
             }
         }

@@ -14,7 +14,7 @@ class Snake(
     init {
         CoroutineScope(Dispatchers.Default).launch {
             while (true) {
-                delay(200)
+                delay(100)
                 val head = segments.last()
                 if (head.bottomLeft.x <= -1f || head.upperRight.x >= 1 ||
                     head.bottomLeft.y <= -1 || head.upperRight.y >= 1)  {
