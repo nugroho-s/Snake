@@ -84,6 +84,7 @@ class Boot {
 
             if (snake.getHead().isOverlapping(food)) {
                 food = Food()
+                snake.grow()
             }
 
             GLFW.glfwSwapBuffers(window)

@@ -10,6 +10,7 @@ class Snake(
     private val segments: ConcurrentLinkedQueue<Square> = ConcurrentLinkedQueue<Square>()
 ) {
     private var direction = Direction.LEFT
+    private var isGrowing = false
     private val speed = 0.05f
     init {
         CoroutineScope(Dispatchers.Default).launch {
@@ -50,7 +51,11 @@ class Snake(
                     }
                 }
                 segments.add(newHead)
-                segments.remove()
+                if (!isGrowing) {
+                    segments.remove()
+                } else {
+                    isGrowing = false
+                }
             }
         }
     }
@@ -67,5 +72,9 @@ class Snake(
         if (newDirection == null) return
         if (direction.isOppositeOf(newDirection)) return
         direction = newDirection
+    }
+
+    fun grow() {
+        isGrowing = true
     }
 }
