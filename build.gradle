@@ -46,6 +46,17 @@ compileTestKotlin {
     kotlinOptions.jvmTarget = '1.8'
 }
 
+task customFatJar(type: Jar) {
+    manifest {
+        attributes 'Main-Class': 'me.nugsky.snake.Boot'
+    }
+    archiveBaseName = "snake"
+    archiveVersion = '0.0.1'
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
 application {
-    mainClassName = 'MainKt'
+    mainClassName = 'me.nugsky.snake.Boot'
 }
