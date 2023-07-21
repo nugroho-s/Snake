@@ -87,6 +87,8 @@ class Boot {
                 snake.grow()
             }
 
+            calculateFps()
+
             GLFW.glfwSwapBuffers(window)
             GLFW.glfwPollEvents()
         }
