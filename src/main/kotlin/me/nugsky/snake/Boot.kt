@@ -62,7 +62,7 @@ class Boot {
         var food = Food()
         val snakeSegments = ConcurrentLinkedQueue<Square>()
         var bottomLeftX = 0.20f
-        while (bottomLeftX > 0) {
+        while (bottomLeftX > -0.25) {
             snakeSegments.add(Square(Point(bottomLeftX,0.1f), Point(bottomLeftX + 0.05f,0.15f)))
             bottomLeftX -= 0.05f
         }

@@ -56,6 +56,10 @@ class Snake(
                 } else {
                     isGrowing = false
                 }
+
+                if (isCollision()) {
+                    break
+                }
             }
         }
     }
@@ -76,5 +80,12 @@ class Snake(
 
     fun grow() {
         isGrowing = true
+    }
+
+    fun isCollision() : Boolean {
+        val head = segments.last()
+        return segments.any{
+            it != head && it.isOverlapping(head)
+        }
     }
 }
